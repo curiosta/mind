@@ -49,4 +49,13 @@ ol.practice li { margin: .25rem 0; }
 .cal-list b { font-weight: 600; }
 .cal-list a { text-decoration: none; }
 .cal-list a:hover { text-decoration: underline; }
+
+/* Calendar filters — spell and cost */
+.cal-filters { display: flex; flex-wrap: wrap; gap: 1.2rem 2rem; margin: 1.2rem 0 1.6rem; }
+.filter-group { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.filter-label { font: 600 .72rem/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-right: .4rem; }
+.filter-btn { font: 600 .8rem/1.3 var(--sans); color: var(--ink-2); background: var(--sand); border: 1px solid var(--line); border-radius: 999px; padding: .35rem .85rem; cursor: pointer; }
+.filter-btn:hover { border-color: var(--teal); color: var(--ink); }
+.filter-btn.active { background: var(--teal); border-color: var(--teal); color: var(--sea-900); }
+
 @media (max-width: 640px) { .sectionnav { display: none; } .cal-date { min-width: 100%; } }
