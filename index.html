@@ -4,15 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>mind · how to learn, and how not to be fooled</title>
-<meta name="description" content="How to learn, and how not to be fooled, in the world of AGI. Five spells. A Curiosta brand.">
+<meta name="description" content="How to learn, and how not to be fooled, in the age of free answers. Try it before you read it: five spells, each one a small experiment you run on yourself.">
 <link rel="canonical" href="https://mind.curiosta.com/">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<meta property="og:title" content="mind · how to learn, and how not to be fooled">
+<meta property="og:description" content="How to learn, and how not to be fooled, in the age of free answers. Try it before you read it: five spells, each one a small experiment you run on yourself.">
+<meta property="og:url" content="https://mind.curiosta.com/">
+<meta name="theme-color" content="#041726">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23041726%22/%3E%3Ctext x=%2214%22 y=%2246%22 font-family=%22Georgia%22 font-size=%2240%22 fill=%22%23fff%22%3Em%3C/text%3E%3Ccircle cx=%2252%22 cy=%2244%22 r=%225%22 fill=%22%2311b5a4%22/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
+<script src="/mind.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <header class="topbar"><div class="wrap">
 <a class="wordmark" href="/">mind<b>.</b></a>
-<nav class="sectionnav">
+<nav class="sectionnav" aria-label="Sections">
 <a href="/" aria-current="page">Home</a>
 <a href="/spells/">The spells</a>
 <a href="/learn/">How to learn</a>
@@ -22,40 +32,110 @@
 <a href="/about/">About</a>
 </nav>
 </div></header>
-<main>
+<main id="main">
 <section class="hero"><div class="wrap">
 <p class="eyebrow">mind · a Curiosta brand</p>
-<h1>How to learn, and how not to be fooled.</h1>
+<h1>How to learn, and how not to be <em>fooled.</em></h1>
 <p class="lede">Information is cheap now. A finished answer is cheaper still. What has become scarce is a memory you actually lived, and a claim you can trace back to a person, a date, and a method.</p>
+<p class="lede">We won't ask you to believe that. Give us sixty seconds and you'll see it for yourself.</p>
+<div class="actions"><a class="btn btn-primary" href="#try">Start the 60-second test</a><a class="btn btn-ghost" href="/spells/">Go straight to the spells</a></div>
 </div></section>
 
-<section class="block"><div class="wrap">
-<p class="eyebrow">01 · The problem</p>
+<section class="block" id="try"><div class="wrap narrow">
+<p class="eyebrow">01 · Try this first</p>
+<h2>Read one paragraph. Then we take it away.</h2>
+<p>No timer, no trick questions. Read it the way you'd read anything you wanted to learn.</p>
+
+<div class="lab" id="lab-recall" data-lab="recall">
+<span class="lab-tag">60-second test</span>
+<div class="step" data-step="read">
+<p class="step-label">Step 1 · Read</p>
+<div class="passage" id="recall-passage">
+<p>Your brain has two ways of working. In focused mode you work on a problem you already have a frame for. In diffuse mode the mind relaxes and links ideas you did not mean to link. You cannot be in both at once. So work for twenty-five minutes, then take a walk, a bus ride, or a shower. The idea that turns up in the shower is not magic: focused work has to leave an unfinished problem behind, or diffuse mode has nothing to chew on. And the feeling of knowing is not proof. Rereading and highlighting feel like study, but what they give you is recognition. The test is whether you can bring it back with the page closed.</p>
+</div>
+<p class="note">This paragraph is our short reading of Barbara Oakley and Terrence Sejnowski's course <em>Learning How to Learn</em>.</p>
+</div>
+
+<div class="step js-only" data-step="rate">
+<fieldset class="choices">
+<legend>Before we hide it: how sure are you that you could explain this to a friend right now?</legend>
+<div class="scale" role="group" aria-label="Confidence from 1 to 5">
+<button type="button" class="chip" data-rate="1">1 · not at all</button>
+<button type="button" class="chip" data-rate="2">2</button>
+<button type="button" class="chip" data-rate="3">3</button>
+<button type="button" class="chip" data-rate="4">4</button>
+<button type="button" class="chip" data-rate="5">5 · completely</button>
+</div>
+</fieldset>
+<div class="actions"><button type="button" class="btn btn-primary" data-action="hide" disabled>Hide it and test me</button></div>
+</div>
+
+<div class="step js-only" data-step="recall" hidden>
+<p class="step-label">Step 2 · Bring it back, page closed</p>
+<p class="note">Type a few words, or just answer in your head and press the button. Nobody sees this but you.</p>
+<label for="rq1">1. What are the two modes called?</label>
+<input type="text" id="rq1" autocomplete="off">
+<label for="rq2">2. For the idea to turn up in the shower, what does focused work have to leave behind?</label>
+<input type="text" id="rq2" autocomplete="off">
+<label for="rq3">3. Rereading and highlighting feel like study. What do they actually give you?</label>
+<input type="text" id="rq3" autocomplete="off">
+<div class="actions"><button type="button" class="btn btn-primary" data-action="check">Show me the answers</button></div>
+</div>
+
+<div class="step js-only" data-step="mark" hidden>
+<p class="step-label">Step 3 · Mark yourself honestly</p>
+<div id="recall-rows"></div>
+<div class="actions"><button type="button" class="btn btn-primary" data-action="result" disabled>See what just happened</button></div>
+</div>
+
+<div class="reveal js-only" data-step="aha" hidden tabindex="-1">
+<div class="aha" aria-live="polite">
+<p class="eyebrow">What just happened</p>
+<p class="result-big" id="recall-score"></p>
+<p id="recall-msg"></p>
+</div>
+<p>Remember how you felt while the paragraph was on the screen? That was <b>recognition</b>. What you just did with the page closed was <b>recall</b>. Oakley calls the gap between the two an <em>illusion of competence</em>. Rereading, highlighting and a fluent explanation from a chatbot all leave you feeling the first one.</p>
+<p>The fix is the thing you just did: close it, rebuild it, look at the gap. Sleep on it and try again tomorrow. Spacing it out works better than one long sitting.</p>
+<div class="actions"><a class="btn btn-primary" href="#spells">See the five spells</a><button type="button" class="btn btn-ghost" data-action="again">Try it again</button></div>
+</div>
+
+<div class="no-js">
+<p><b>Now cover the paragraph with your hand</b> and answer these out loud:</p>
+<ol class="practice">
+<li>What are the two modes called? <details><summary>Answer</summary>Focused and diffuse.</details></li>
+<li>For the idea to turn up in the shower, what does focused work have to leave behind? <details><summary>Answer</summary>An unfinished problem.</details></li>
+<li>Rereading and highlighting feel like study. What do they actually give you? <details><summary>Answer</summary>Recognition, not recall.</details></li>
+</ol>
+<p>If one of those was harder than it felt while you were reading, you've just met the <em>illusion of competence</em>. Reading it gave you recognition. Answering with it covered took recall. Close it, rebuild it, look at the gap.</p>
+</div>
+</div>
+</div></section>
+
+<section class="block alt"><div class="wrap narrow">
+<p class="eyebrow">02 · Why that matters now</p>
 <h2>Two failures, same week.</h2>
-<p>You ask a model to explain a chapter. It does, fluently, and you nod along because the explanation sounds right. The next morning you cannot rebuild the argument without the screen in front of you. That is not learning. That is borrowing, and the bill comes due the moment the tool is closed.</p>
+<p>You ask a model to explain a chapter. It does, fluently, and you nod along because the explanation sounds right. The next morning you cannot rebuild the argument without the screen in front of you. That is the gap you just felt. It is borrowing, not learning, and the bill comes due the moment the tool is closed.</p>
 <p>Someone forwards a voice note. It sounds like a relative. The account is old, the request is urgent, and you almost send the money before you catch yourself. That is not a new trick. Urgency and a familiar voice are older than writing. The machine only made them cheap to produce at scale.</p>
 <p>mind is for both failures. How to learn when answers are free. How not to be fooled by a machine, or by a person.</p>
 </div></section>
 
-<section class="block alt"><div class="wrap">
-<p class="eyebrow">02 · The spells</p>
-<h2>Five skills. The names are a memory aid.</h2>
-<div class="spell"><h3>The Patronus</h3><p>A specific memory, not a mood. If you cannot recall what you saw, you cannot tell it apart from what was written for you.</p></div>
-<div class="spell"><h3>Occlumency</h3><p>Name the feeling before you act. The share button is faster than the thought, and that speed is exactly where the damage happens.</p></div>
-<div class="spell"><h3>Legilimency</h3><p>Notice what is repeated, and what is left out. Including in your own reading, where the frame is hardest to see.</p></div>
-<div class="spell"><h3>Priori Incantatem</h3><p>Trace the claim to the first person who made it.</p></div>
-<div class="spell"><h3>The Foundation</h3><p>Observation first, model second. If the conclusion arrived before the evidence, you did not build it.</p></div>
-<p><a href="/spells/">Read the spells, with the practice →</a></p>
+<section class="block" id="spells"><div class="wrap">
+<div class="section-head">
+<p class="eyebrow">03 · The spells</p>
+<h2>Five skills. Each one is a small experiment you run on yourself.</h2>
+<p>The names are a memory aid from the books. Every spell page asks you to do something first. The explanation comes after, once you've seen the effect yourself.</p>
+</div>
+<div class="cards">
+<a class="card" href="/spells/#patronus"><span class="card-num">01</span><h3>The Patronus</h3><p>Write down one moment from yesterday. Find out whether it's a memory or just a caption.</p><span class="more">Cast it →</span></a>
+<a class="card" href="/spells/#occlumency"><span class="card-num">02</span><h3>Occlumency</h3><p>A simulated urgent voice note, with a countdown. See what your thumb does before your head catches up.</p><span class="more">Cast it →</span></a>
+<a class="card" href="/spells/#legilimency"><span class="card-num">03</span><h3>Legilimency</h3><p>Read a short news piece. See how your judgment moves once you learn what it left out.</p><span class="more">Cast it →</span></a>
+<a class="card" href="/spells/#priori"><span class="card-num">04</span><h3>Priori Incantatem</h3><p>A viral number, traced back one hop at a time. Watch it shrink back to its source.</p><span class="more">Cast it →</span></a>
+<a class="card" href="/spells/#foundation"><span class="card-num">05</span><h3>The Foundation</h3><p>Look at what floats and what sinks, build a model, then watch one new observation break it.</p><span class="more">Cast it →</span></a>
+<a class="card" href="/defense/"><span class="card-num">+</span><h3>Would you act?</h3><p>Five messages, a decision on each, then the order of checks that would have caught every one.</p><span class="more">Defense →</span></a>
+</div>
 </div></section>
 
-<section class="block"><div class="wrap">
-<p class="eyebrow">03 · The ideas</p>
-<h2>The spine is five definitions.</h2>
-<p>The ideas page is the spine. Spells, learning, and defence are what you do with it.</p>
-<p><a href="/ideas/">Read the five ideas →</a></p>
-</div></section>
-
-<section class="block alt"><div class="wrap">
+<section class="block alt"><div class="wrap narrow">
 <p class="eyebrow">04 · Today</p>
 <h2>One pass. Ten minutes.</h2>
 <ol class="practice">
@@ -63,15 +143,20 @@
 <li>Pick one claim you almost forwarded. Who said it first? If you cannot name them, do not send it.</li>
 <li>Close the tab on something you "already know." Write three lines from memory. The gap is the lesson.</li>
 </ol>
-<p class="note">The science under this is Barbara Oakley and Terrence Sejnowski, <em>Learning How to Learn</em> and <em>A Mind for Numbers</em>, and John Hutchinson, <em>Concept Development Studies in Chemistry</em>, Rice University. The spell names are ours. The method is theirs. <a href="/learn/">How to learn →</a></p>
+<p class="note">The science under this comes from Barbara Oakley and Terrence Sejnowski (<em>Learning How to Learn</em>, <em>A Mind for Numbers</em>) and John Hutchinson (<em>Concept Development Studies in Chemistry</em>, Rice University). The spell names are ours. The method is theirs. <a href="/learn/">How to learn →</a></p>
 </div></section>
 
-<section class="block"><div class="wrap">
-<p class="eyebrow">05 · Nearby</p>
-<p>The same family, a different job. <a href="https://learn.curiosta.com/">learn</a> is the fundamentals. <a href="https://kinetic.curiosta.com/">kinetic</a> is the body under load. <a href="https://buildwith.curiosta.com/">buildwith</a> is making a place. This one is the mind that has to trust, or not trust, what it is shown.</p>
-<p>Checked 7 Oct 2026.</p>
+<section class="block"><div class="wrap narrow">
+<p class="eyebrow">05 · The spine</p>
+<h2>Five ideas hold it together.</h2>
+<p>The <a href="/ideas/">ideas page</a> is the spine. Spells, learning and defence are what you do with it. Nearby in the family: <a href="https://learn.curiosta.com/">learn</a> covers the fundamentals, <a href="https://kinetic.curiosta.com/">kinetic</a> covers the body under load, and <a href="https://buildwith.curiosta.com/">buildwith</a> is about making a place. This one is about the mind that has to decide what to trust.</p>
+<p class="checked">Sources checked 11 Oct 2026.</p>
 </div></section>
 </main>
-<footer class="footer"><div class="wrap">mind · a Curiosta brand · <a href="/defense/">defense</a> · <a href="https://learn.curiosta.com/">learn</a> · <a href="https://kinetic.curiosta.com/">kinetic</a></div></footer>
+<footer class="footer"><div class="wrap cols">
+<div><p><b style="color:#fff">mind</b> · a Curiosta brand</p><p>No tracking. Anything you type stays in your browser.</p></div>
+<div><p><a href="/spells/">spells</a> · <a href="/learn/">learn</a> · <a href="/defense/">defense</a> · <a href="/ideas/">ideas</a> · <a href="/calendar/">calendar</a> · <a href="/about/">about</a></p>
+<p>Family: <a href="https://learn.curiosta.com/">learn</a> · <a href="https://kinetic.curiosta.com/">kinetic</a> · <a href="https://buildwith.curiosta.com/">buildwith</a> · <a href="https://founder.curiosta.com/">founder</a></p></div>
+</div></footer>
 </body>
 </html>

@@ -6,13 +6,23 @@
 <title>Calendar · mind</title>
 <meta name="description" content="A pointer to groups already running. Not a booking platform. A Curiosta brand.">
 <link rel="canonical" href="https://mind.curiosta.com/calendar/">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<meta property="og:title" content="Calendar · mind">
+<meta property="og:description" content="A pointer to groups already running. Not a booking platform. A Curiosta brand.">
+<meta property="og:url" content="https://mind.curiosta.com/calendar/">
+<meta name="theme-color" content="#041726">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23041726%22/%3E%3Ctext x=%2214%22 y=%2246%22 font-family=%22Georgia%22 font-size=%2240%22 fill=%22%23fff%22%3Em%3C/text%3E%3Ccircle cx=%2252%22 cy=%2244%22 r=%225%22 fill=%22%2311b5a4%22/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
+<script src="/mind.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <header class="topbar"><div class="wrap">
 <a class="wordmark" href="/">mind<b>.</b></a>
-<nav class="sectionnav">
+<nav class="sectionnav" aria-label="Sections">
 <a href="/">Home</a>
 <a href="/spells/">The spells</a>
 <a href="/learn/">How to learn</a>
@@ -22,74 +32,73 @@
 <a href="/about/">About</a>
 </nav>
 </div></header>
-<main>
+<main id="main">
 <section class="page-hero"><div class="wrap">
 <p class="eyebrow">mind · a Curiosta brand</p>
 <h1>Calendar.</h1>
 <p class="lede">A pointer to groups already running. Not a booking platform. Past sessions stay listed, so a group can still be found after its date has passed.</p>
 </div></section>
-<section class="block"><div class="wrap">
+<section class="block"><div class="wrap narrow">
 <p class="eyebrow">01 · The idea</p>
 <h2>A calendar that refreshes every week.</h2>
-<p>Support groups run in cohorts — four to eight weekly sessions — so the useful view is what is starting this week, not a year of dates. This page lists upcoming meetups chronologically, the way buildwith lists its Coming up section: date, place, type, and a link out.</p>
-<p>Past sessions stay on the page. A group that has already met can still be found.</p>
+<p>Support groups run in cohorts of four to eight weekly sessions, so the useful view is what's starting this week, not a year of dates. This page lists upcoming meetups in date order, the way buildwith lists its Coming up section: date, place, type and a link out.</p>
+<p>Each entry is tagged with the spell it's closest to. Occlumency covers naming feelings and the pause before a spiral. Legilimency covers reading what's left out in a relationship. The Foundation covers understanding from observation, for example ADHD and autism. Patronus covers memory work, such as grief.</p>
+<p>Past sessions stay on the page, so a group that has already met can still be found.</p>
 </div></section>
 <section class="block alt"><div class="wrap">
 <p class="eyebrow">02 · Coming up</p>
 <h2>This week and next.</h2>
-<div class="cal-filters">
+<div class="cal-filters js-only" role="group" aria-label="Filter the calendar">
   <div class="filter-group">
     <span class="filter-label">Spell</span>
-    <button class="filter-btn active" data-filter="spell" data-value="all">All</button>
-    <button class="filter-btn" data-filter="spell" data-value="patronus">Patronus</button>
-    <button class="filter-btn" data-filter="spell" data-value="occlumency">Occlumency</button>
-    <button class="filter-btn" data-filter="spell" data-value="legilimency">Legilimency</button>
-    <button class="filter-btn" data-filter="spell" data-value="priorincantatem">Priori Incantatem</button>
-    <button class="filter-btn" data-filter="spell" data-value="foundation">The Foundation</button>
+    <button class="filter-btn active" data-filter="spell" data-value="all" aria-pressed="true">All</button>
+    <button class="filter-btn" data-filter="spell" data-value="patronus" aria-pressed="false">Patronus</button>
+    <button class="filter-btn" data-filter="spell" data-value="occlumency" aria-pressed="false">Occlumency</button>
+    <button class="filter-btn" data-filter="spell" data-value="legilimency" aria-pressed="false">Legilimency</button>
+    <button class="filter-btn" data-filter="spell" data-value="priorincantatem" aria-pressed="false">Priori Incantatem</button>
+    <button class="filter-btn" data-filter="spell" data-value="foundation" aria-pressed="false">The Foundation</button>
   </div>
   <div class="filter-group">
     <span class="filter-label">Cost</span>
-    <button class="filter-btn active" data-filter="cost" data-value="all">All</button>
-    <button class="filter-btn" data-filter="cost" data-value="free">Free</button>
-    <button class="filter-btn" data-filter="cost" data-value="paid">Paid</button>
+    <button class="filter-btn active" data-filter="cost" data-value="all" aria-pressed="true">All</button>
+    <button class="filter-btn" data-filter="cost" data-value="free" aria-pressed="false">Free</button>
+    <button class="filter-btn" data-filter="cost" data-value="paid" aria-pressed="false">Paid</button>
   </div>
   <div class="filter-group">
     <span class="filter-label">Format</span>
-    <button class="filter-btn active" data-filter="format" data-value="all">All</button>
-    <button class="filter-btn" data-filter="format" data-value="online">Online</button>
-    <button class="filter-btn" data-filter="format" data-value="inperson">In person</button>
+    <button class="filter-btn active" data-filter="format" data-value="all" aria-pressed="true">All</button>
+    <button class="filter-btn" data-filter="format" data-value="online" aria-pressed="false">Online</button>
+    <button class="filter-btn" data-filter="format" data-value="inperson" aria-pressed="false">In person</button>
   </div>
   <div class="filter-group">
     <span class="filter-label">Cadence</span>
-    <button class="filter-btn active" data-filter="cadence" data-value="all">All</button>
-    <button class="filter-btn" data-filter="cadence" data-value="dated">Dated</button>
-    <button class="filter-btn" data-filter="cadence" data-value="ongoing">Ongoing</button>
+    <button class="filter-btn active" data-filter="cadence" data-value="all" aria-pressed="true">All</button>
+    <button class="filter-btn" data-filter="cadence" data-value="dated" aria-pressed="false">Dated</button>
+    <button class="filter-btn" data-filter="cadence" data-value="ongoing" aria-pressed="false">Ongoing</button>
   </div>
   <div class="filter-group">
     <span class="filter-label">City</span>
-    <button class="filter-btn active" data-filter="city" data-value="all">All</button>
-    <button class="filter-btn" data-filter="city" data-value="online">Online</button>
-    <button class="filter-btn" data-filter="city" data-value="bengaluru">Bengaluru</button>
+    <button class="filter-btn active" data-filter="city" data-value="all" aria-pressed="true">All</button>
+    <button class="filter-btn" data-filter="city" data-value="online" aria-pressed="false">Online</button>
+    <button class="filter-btn" data-filter="city" data-value="bengaluru" aria-pressed="false">Bengaluru</button>
   </div>
 </div>
 <ul class="cal-list" id="cal-upcoming">
-<li class="cal-entry" data-spell="foundation" data-cost="free" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Sat 10 Oct 2026</span> <span class="cal-emoji">🎯</span> <b>From Distracted to Directed</b> — free online group therapy, 8 PM · <a href="https://www.vandrevalafoundation.com/group-therapy" rel="nofollow">Vandrevala Foundation</a></li>
-<li class="cal-entry" data-spell="legilimency" data-cost="free" data-format="inperson" data-cadence="dated" data-city="bengaluru"><span class="cal-date">Sat 10 Oct 2026</span> <span class="cal-emoji">🍺</span> <b>Beyond the Buzz: youth and alcohol use</b> — panel with Amaha's clinical director and Mentality's founder editor · Bangalore International Centre, Domlur · <a href="https://bangaloreinternationalcentre.org/event/beyond-the-buzz/" rel="nofollow">BIC</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="free" data-format="inperson" data-cadence="dated" data-city="bengaluru"><span class="cal-date">Sun 11 Oct 2026</span> <span class="cal-emoji">🌈</span> <b>Mental health sessions for transgender persons</b> — Sundays 12–1 PM, storytelling and creative activities, NIMHANS facilitators · Satarangisaathi Foundation, KR Puram, Bengaluru · <a href="https://www.instagram.com/satarangi_saathi/" rel="nofollow">Satarangisaathi</a></li>
-<li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Mon 12 Oct 2026</span> <span class="cal-emoji">🕯️</span> <b>Unpacking your infidelity</b> — 4 weekly Zoom sessions, 8 PM IST, therapist-led, 6–8 people · ₹3,000 · <a href="https://www.soulup.in/products/support-groups-unpacking-infidelity" rel="nofollow">SoulUp</a></li>
-<li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Tue 13 Oct 2026</span> <span class="cal-emoji">🌊</span> <b>Befriending your emotions</b> — weekly Tuesday, 75 min, therapist-led · ₹3,000 · <a href="https://www.soulup.in/products/support-groups-befriending-your-emotions" rel="nofollow">SoulUp</a></li>
-<li class="cal-entry" data-spell="legilimency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Wed 14 Oct 2026</span> <span class="cal-emoji">🔍</span> <b>Narcissistic abuse support group</b> — 10 weekly sessions, Wednesdays 8 PM IST · ₹6,500 · <a href="https://www.soulup.in/products/support-groups-narcissistic-partner-support-group" rel="nofollow">SoulUp</a></li>
+<li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Mon 12 Oct 2026</span> <span class="cal-emoji">🕯️</span> <b>Unpacking your infidelity</b> — 4 weekly Zoom sessions, 8 PM IST, therapist-led, 6–8 people · <a href="https://www.soulup.in/products/support-groups-unpacking-infidelity" rel="nofollow">SoulUp</a></li>
+<li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Tue 13 Oct 2026</span> <span class="cal-emoji">🌊</span> <b>Befriending your emotions</b> — weekly Tuesday, 75 min, therapist-led · <a href="https://www.soulup.in/products/support-groups-befriending-your-emotions" rel="nofollow">SoulUp</a></li>
+<li class="cal-entry" data-spell="legilimency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Wed 14 Oct 2026</span> <span class="cal-emoji">🔍</span> <b>Narcissistic abuse support group</b> — 10 weekly sessions, Wednesdays 8 PM IST · <a href="https://www.soulup.in/products/support-groups-narcissistic-partner-support-group" rel="nofollow">SoulUp</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="free" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Wed 14 Oct 2026</span> <span class="cal-emoji">🤗</span> <b>Weekly mental health session</b> — free, peer-led, volunteer psychiatrists and counsellors · <a href="https://huggingclubofindia.org/" rel="nofollow">Hugging Club of India</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="free" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Thu 15 Oct 2026</span> <span class="cal-emoji">🔗</span> <b>Balancing life within</b> — free online group therapy, 11 AM · <a href="https://www.vandrevala.com/" rel="nofollow">Vandrevala Foundation</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="free" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Fri 16 Oct 2026</span> <span class="cal-emoji">💕</span> <b>Modern Dating & Marriage Choices</b> — free online group therapy, 6 PM · <a href="https://www.vandrevalafoundation.com/group-therapy" rel="nofollow">Vandrevala Foundation</a></li>
 <li class="cal-entry" data-spell="legilimency" data-cost="free" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Sat 17 Oct 2026</span> <span class="cal-emoji">🧱</span> <b>Understanding attachment styles</b> — free online group therapy, 1 PM · <a href="https://www.vandrevala.com/" rel="nofollow">Vandrevala Foundation</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Sat 17 Oct 2026</span> <span class="cal-emoji">✍️</span> <b>Life skills for emotional wellness</b> — weekly Saturday, NLP-based · <a href="https://www.soulup.in/collections/depression-support-groups-in-india" rel="nofollow">SoulUp</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="free" data-format="inperson" data-cadence="dated" data-city="bengaluru"><span class="cal-date">Sun 18 Oct 2026</span> <span class="cal-emoji">🌈</span> <b>Mental health sessions for transgender persons</b> — Sundays 12–1 PM, storytelling and creative activities, NIMHANS facilitators · Satarangisaathi Foundation, KR Puram, Bengaluru · <a href="https://www.instagram.com/satarangi_saathi/" rel="nofollow">Satarangisaathi</a></li>
-<li class="cal-entry" data-spell="foundation" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Sat 24 Oct 2026</span> <span class="cal-emoji">📖</span> <b>The Autism Living Room</b> — virtual space, 11 AM–12 PM, ₹299 · <a href="https://myndstories.com/" rel="nofollow">MyndStories</a></li>
-<li class="cal-entry" data-spell="foundation" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Sun 25 Oct 2026</span> <span class="cal-emoji">🌊</span> <b>The ADHD Room</b> — virtual space, 5–6 PM, ₹299 · <a href="https://myndstories.com/" rel="nofollow">MyndStories</a></li>
+<li class="cal-entry" data-spell="foundation" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Sat 24 Oct 2026</span> <span class="cal-emoji">📖</span> <b>The Autism Living Room</b> — virtual space, 11 AM–12 PM · <a href="https://myndstories.com/" rel="nofollow">MyndStories</a></li>
+<li class="cal-entry" data-spell="foundation" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Sun 25 Oct 2026</span> <span class="cal-emoji">🌊</span> <b>The ADHD Room</b> — virtual space, 5–6 PM · <a href="https://myndstories.com/" rel="nofollow">MyndStories</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Wed 28 Oct 2026</span> <span class="cal-emoji">🌙</span> <b>Loneliness support group</b> — therapist-led, weekly Zoom · <a href="https://www.soulup.in/collections/support-groups-for-loneliness-in-india" rel="nofollow">SoulUp</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Wed 28 Oct 2026</span> <span class="cal-emoji">💔</span> <b>Rebuilding life after divorce</b> — therapist-led, weekly Zoom · <a href="https://www.soulup.in/collections/upcoming-groups" rel="nofollow">SoulUp</a></li>
-<li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Sat 31 Oct 2026</span> <span class="cal-emoji">🎨</span> <b>Paint it out: a burnout reset</b> — virtual, 11 AM–12:30 PM, ₹1,299 · <a href="https://myndstories.com/" rel="nofollow">MyndStories</a></li>
+<li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Sat 31 Oct 2026</span> <span class="cal-emoji">🎨</span> <b>Paint it out: a burnout reset</b> — virtual, 11 AM–12:30 PM · <a href="https://myndstories.com/" rel="nofollow">MyndStories</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Wed 11 Nov 2026</span> <span class="cal-emoji">🧠</span> <b>Anxiety support group</b> — therapist-led, weekly Zoom, small group · <a href="https://www.soulup.in/collections/support-groups-for-anxiety-in-india" rel="nofollow">SoulUp</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Wed 11 Nov 2026</span> <span class="cal-emoji">🔄</span> <b>OCD support group</b> — therapist-led, weekly Zoom · <a href="https://www.soulup.in/collections/upcoming-groups" rel="nofollow">SoulUp</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="free" data-format="inperson" data-cadence="dated" data-city="bengaluru"><span class="cal-date">Dec 5–6 2026</span> <span class="cal-emoji">🏛️</span> <b>Manotsava 2026</b> — India's national mental health festival, listening and sharing circles · Jaymahal Palace, Bengaluru · <a href="https://homegrown.co.in/homegrown-explore/manotsava-2026-brings-listening-sharing-circles-to-bengaluru-and-delhi" rel="nofollow">Manotsava</a></li>
@@ -102,10 +111,10 @@
 <li class="cal-entry" data-spell="occlumency" data-cost="free" data-format="online" data-cadence="ongoing" data-city="online"><span class="cal-date">Ongoing</span> <span class="cal-emoji">💬</span> <b>LivesWispear</b> — free, anonymous peer support community · <a href="https://liveswhisper.com/" rel="nofollow">LivesWispear</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="free" data-format="online" data-cadence="ongoing" data-city="online"><span class="cal-date">Ongoing</span> <span class="cal-emoji">💬</span> <b>Uplifty</b> — free 24/7 anonymous moderated support groups · <a href="https://uplifty.app/" rel="nofollow">Uplifty</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="free" data-format="online" data-cadence="ongoing" data-city="online"><span class="cal-date">Ongoing</span> <span class="cal-emoji">💬</span> <b>sayHey</b> — free peer-to-peer listening platform · <a href="https://sayhey.co.in/" rel="nofollow">sayHey</a></li>
-<li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="ongoing" data-city="online"><span class="cal-date">Ongoing</span> <span class="cal-emoji">💬</span> <b>LeanOn</b> — peer listeners, ₹160 for 15 min, first 5 min free · <a href="https://www.leanon.app/" rel="nofollow">LeanOn</a></li>
+<li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="ongoing" data-city="online"><span class="cal-date">Ongoing</span> <span class="cal-emoji">💬</span> <b>LeanOn</b> — paid peer listeners, first 5 min free · <a href="https://www.leanon.app/" rel="nofollow">LeanOn</a></li>
 </ul>
 <p class="note" id="cal-empty" hidden>Nothing in this combination.</p>
-<p class="note">These are external cohorts and platforms. mind does not book, charge, or run the sessions. The filters match spell, cost, format, cadence, and city. Checked 7 Oct 2026.</p>
+<p class="note">These are external cohorts and platforms. mind does not book, charge for or run the sessions. The filters match spell, cost, format, cadence and city. Listings checked 7 Oct 2026. Entries dated before 11 Oct 2026 moved to the archive on 11 Oct 2026.</p>
 </div></section>
 <section class="block"><div class="wrap">
 <p class="eyebrow">03 · Since 2026</p>
@@ -114,41 +123,15 @@
 <li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Jan 2026</span> <span class="cal-emoji">🕯️</span> <b>Emotional regulation</b> — 4 weekly Zoom sessions, Saturdays 10 AM IST · <a href="https://www.soulup.in/products/emotional-regulation" rel="nofollow">SoulUp</a></li>
 <li class="cal-entry" data-spell="occlumency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Mar 2026</span> <span class="cal-emoji">🌊</span> <b>Caregiving support group</b> — 4 weekly sessions, Mondays 8 PM IST, therapist-led · <a href="https://www.soulup.in/products/caregiving-support-group-aanchal-1" rel="nofollow">SoulUp</a></li>
 <li class="cal-entry" data-spell="legilimency" data-cost="paid" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Jun 2026</span> <span class="cal-emoji">🔍</span> <b>Bipolar support group</b> — 6 weekly sessions, Mondays 8 PM IST · <a href="https://www.soulup.in/products/bipolar-support-group" rel="nofollow">SoulUp</a></li>
+<li class="cal-entry" data-spell="foundation" data-cost="free" data-format="online" data-cadence="dated" data-city="online"><span class="cal-date">Sat 10 Oct 2026</span> <span class="cal-emoji">🎯</span> <b>From Distracted to Directed</b> — free online group therapy, 8 PM · <a href="https://www.vandrevalafoundation.com/group-therapy" rel="nofollow">Vandrevala Foundation</a></li>
+<li class="cal-entry" data-spell="legilimency" data-cost="free" data-format="inperson" data-cadence="dated" data-city="bengaluru"><span class="cal-date">Sat 10 Oct 2026</span> <span class="cal-emoji">🍺</span> <b>Beyond the Buzz: youth and alcohol use</b> — panel with Amaha's clinical director and Mentality's founder editor · Bangalore International Centre, Domlur · <a href="https://bangaloreinternationalcentre.org/event/beyond-the-buzz/" rel="nofollow">BIC</a></li>
 </ul>
 </div></section>
 </main>
-<footer class="footer"><div class="wrap">mind · a Curiosta brand · <a href="/defense/">defense</a> · <a href="https://learn.curiosta.com/">learn</a> · <a href="https://kinetic.curiosta.com/">kinetic</a></div></footer>
-<script>
-(function () {
-  var state = { spell: "all", cost: "all", format: "all", cadence: "all", city: "all" };
-  var buttons = document.querySelectorAll(".filter-btn");
-  var entries = document.querySelectorAll("#cal-upcoming .cal-entry");
-  var empty = document.getElementById("cal-empty");
-  function apply() {
-    var visible = 0;
-    entries.forEach(function (entry) {
-      var show = true;
-      Object.keys(state).forEach(function (key) {
-        if (state[key] !== "all" && entry.getAttribute("data-" + key) !== state[key]) show = false;
-      });
-      entry.style.display = show ? "" : "none";
-      if (show) visible += 1;
-    });
-    if (empty) empty.hidden = visible !== 0;
-  }
-  buttons.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var group = btn.getAttribute("data-filter");
-      var value = btn.getAttribute("data-value");
-      buttons.forEach(function (b) {
-        if (b.getAttribute("data-filter") === group) b.classList.remove("active");
-      });
-      btn.classList.add("active");
-      if (Object.prototype.hasOwnProperty.call(state, group)) state[group] = value;
-      apply();
-    });
-  });
-})();
-</script>
+<footer class="footer"><div class="wrap cols">
+<div><p><b style="color:#fff">mind</b> · a Curiosta brand</p><p>No tracking. Anything you type stays in your browser.</p></div>
+<div><p><a href="/spells/">spells</a> · <a href="/learn/">learn</a> · <a href="/defense/">defense</a> · <a href="/ideas/">ideas</a> · <a href="/calendar/">calendar</a> · <a href="/about/">about</a></p>
+<p>Family: <a href="https://learn.curiosta.com/">learn</a> · <a href="https://kinetic.curiosta.com/">kinetic</a> · <a href="https://buildwith.curiosta.com/">buildwith</a> · <a href="https://founder.curiosta.com/">founder</a></p></div>
+</div></footer>
 </body>
 </html>

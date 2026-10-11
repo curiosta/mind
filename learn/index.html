@@ -4,45 +4,134 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>How to learn · mind</title>
+<meta name="description" content="Learning when answers are free. A chunking test, a focus timer and the closed-tool rule, drawn from Oakley, Sejnowski and Hutchinson.">
+<link rel="canonical" href="https://mind.curiosta.com/learn/">
+<meta property="og:title" content="How to learn · mind">
+<meta property="og:description" content="Learning when answers are free. A chunking test, a focus timer and the closed-tool rule, drawn from Oakley, Sejnowski and Hutchinson.">
+<meta property="og:url" content="https://mind.curiosta.com/learn/">
+<meta name="theme-color" content="#041726">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23041726%22/%3E%3Ctext x=%2214%22 y=%2246%22 font-family=%22Georgia%22 font-size=%2240%22 fill=%22%23fff%22%3Em%3C/text%3E%3Ccircle cx=%2252%22 cy=%2244%22 r=%225%22 fill=%22%2311b5a4%22/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<script src="/mind.js" defer></script>
 </head>
 <body>
-<header class="topbar"><div class="wrap"><a class="wordmark" href="/">mind<b>.</b></a>
-<nav class="sectionnav"><a href="/">Home</a><a href="/spells/">The spells</a><a href="/learn/" aria-current="page">How to learn</a><a href="/defense/">Defense</a><a href="/ideas/">The ideas</a><a href="/calendar/">Calendar</a><a href="/about/">About</a></nav></div></header>
-<main>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><div class="wrap">
+<a class="wordmark" href="/">mind<b>.</b></a>
+<nav class="sectionnav" aria-label="Sections">
+<a href="/">Home</a>
+<a href="/spells/">The spells</a>
+<a href="/learn/" aria-current="page">How to learn</a>
+<a href="/defense/">Defense</a>
+<a href="/ideas/">The ideas</a>
+<a href="/calendar/">Calendar</a>
+<a href="/about/">About</a>
+</nav>
+</div></header>
+<main id="main">
 <section class="page-hero"><div class="wrap">
 <p class="eyebrow">How to learn</p>
 <h1>Judgment is the scarce skill.</h1>
-<p class="lede">In a world of free answers, learning is deciding what is worth knowing, and proving to yourself that you know it when the tool is closed.</p>
+<p class="lede">When answers are free, learning means deciding what's worth knowing, then proving to yourself that you know it with the tool closed. Three small experiments first. The reading comes after.</p>
 </div></section>
-<section class="block"><div class="wrap">
-<p class="eyebrow">Where</p>
-<h2>Do not start with another feed.</h2>
-<p>A course, a book, a person who will ask you to rebuild the argument. Those still work. A chat window is a tutor only if you close it and write. Barbara Oakley failed mathematics in school, then took a doctorate in engineering. The useful part is not the ending. It is that she treated difficulty as a method problem, not a character problem.</p>
-<p>Start here, in this order, if you want the sources this site stands on.</p>
+
+<section class="block" id="chunking"><div class="wrap narrow">
+<p class="eyebrow">01 · Chunking</p>
+<h2>Twelve letters, twice.</h2>
+<p>You'll see a row of letters for five seconds. Then they disappear and you type what you remember. Then we do it again.</p>
+<div class="lab" data-lab="chunk">
+<span class="lab-tag">Do this first</span>
+<div class="js-only">
+<p class="step-label" data-field="round-label">Round 1 of 2</p>
+<div class="letters" data-field="letters" aria-live="polite">Ready?</div>
+<div class="actions" data-step="go"><button type="button" class="btn btn-primary" data-action="show">Show the letters</button></div>
+<div data-step="type" hidden>
+<label for="chunk-in">Type the letters you remember, in order</label>
+<input type="text" id="chunk-in" autocomplete="off" autocapitalize="characters" spellcheck="false">
+<div class="actions"><button type="button" class="btn btn-primary" data-action="score">Check</button></div>
+</div>
+<p data-field="r1" class="note"></p>
+</div>
+<div class="reveal" data-step="chunk-aha" tabindex="-1">
+<div class="aha js-only" aria-live="polite"><p class="eyebrow">Same number of letters</p><p class="result-big" data-field="scores"></p><p data-field="chunk-msg"></p></div>
+<p class="no-js"><b>Try it on paper:</b> look at <code>QZKTMPRWXHDL</code> for five seconds, cover it and write it down. Then do the same with <code>ATMUPIPINSMS</code>.</p>
+<p>Both rows had twelve letters. The second was really four things you already know: ATM, UPI, PIN, SMS. Working memory only holds a handful of items at once. A <b>chunk</b> is an idea pressed into a single slot, so the other slots are free for the next step.</p>
+<p>That's what understanding buys you: room. Oakley's recipe for building a chunk is to focus, understand, then learn the context where it applies. A formula memorised without that context falls apart when the question is asked a different way. That's the exam you thought you'd prepared for.</p>
+</div>
+</div>
+</div></section>
+
+<section class="block alt" id="closed-tool"><div class="wrap narrow">
+<p class="eyebrow">02 · The closed-tool rule</p>
+<h2>Which would you type?</h2>
+<div class="lab" data-lab="prompt">
+<span class="lab-tag">Do this first</span>
+<p>You have a chapter on photosynthesis to learn tonight, and a chatbot open. Pick the prompt you'd actually type.</p>
+<fieldset class="choices js-only">
+<legend class="note">Be honest. Nobody's watching.</legend>
+<button type="button" class="chip" data-prompt="a">"Explain photosynthesis simply."</button>
+<button type="button" class="chip" data-prompt="b">"Ask me three questions about photosynthesis, one at a time. Don't give the answers until I've tried."</button>
+</fieldset>
+<div class="reveal" data-step="prompt-aha" tabindex="-1">
+<div class="aha js-only" aria-live="polite"><p data-field="prompt-msg"></p></div>
+<p>The first prompt gets you a fluent paragraph, like the one on the <a href="/#try">home page</a>. It leaves you feeling you know it, and that feeling is <b>recognition</b>. The second prompt makes you <b>retrieve</b>, and that's the part that builds memory.</p>
+<p><b>The rule:</b> use the tool to speed things up, never to stand in for you. Ask it for a question, not an essay. Then answer with the tool closed. If you can't explain the thing without it, you borrowed the explanation. Give it back.</p>
+<div class="actions js-only"><button type="button" class="btn btn-ghost" data-action="copy">Copy the second prompt</button><span class="note" data-field="copied" aria-live="polite" style="align-self:center"></span></div>
+</div>
+</div>
+</div></section>
+
+<section class="block" id="focus"><div class="wrap narrow">
+<p class="eyebrow">03 · Focused, then diffuse</p>
+<h2>Leave a problem unfinished on purpose.</h2>
+<p>Focused mode works on a problem you already have a frame for. Diffuse mode links things you didn't mean to link. You can't be in both at once. The idea that turns up in the shower only comes if focused work left an unfinished problem behind for diffuse mode to chew on.</p>
+<div class="lab" data-lab="pomo">
+<span class="lab-tag">A timer, if you want one</span>
+<label for="pomo-q">The question you're leaving for the walk</label>
+<input type="text" id="pomo-q" class="js-only" placeholder="e.g. Why does the egg float in salt water?">
+<div class="js-only">
+<p class="pomo" data-field="clock" aria-live="off">25:00</p>
+<p class="note" data-field="phase" aria-live="polite">Focused: 25 minutes. Phone face down.</p>
+<div class="actions"><button type="button" class="btn btn-primary" data-action="start">Start focus</button><button type="button" class="btn btn-ghost" data-action="reset">Reset</button></div>
+</div>
+<p class="no-js">Set any timer for 25 minutes. When it rings, write the question you're stuck on, then walk for five minutes without a feed.</p>
+<p class="note">The timer runs in this tab only. No notifications, no sound, nothing saved.</p>
+</div>
+</div></section>
+
+<section class="block alt"><div class="wrap narrow">
+<p class="eyebrow">04 · Where to learn</p>
+<h2>Don't start with another feed.</h2>
+<p>Start with a course, a book, or a person who'll ask you to rebuild the argument. Those still work. A chat window is only a tutor if you close it and write. Barbara Oakley failed mathematics at school and later earned a doctorate in engineering. The useful part isn't the ending. It's that she treated difficulty as a problem of method, not of character.</p>
+<p>If you want the sources this site stands on, start here, in this order:</p>
 <ol class="practice">
-<li>Coursera, <em>Learning How to Learn</em>, Oakley and Sejnowski. The lectures are short. Do the retrieval, not just the videos.</li>
-<li>Oakley, <em>A Mind for Numbers</em>. Same ideas, on paper, so you can close it.</li>
-<li>Hutchinson, <em>Concept Development Studies in Chemistry</em>, Rice University. Free. The subject is chemistry. The order is the point, and it transfers.</li>
+<li><a href="https://www.coursera.org/learn/learning-how-to-learn" rel="nofollow">Coursera, <em>Learning How to Learn</em></a>, Oakley and Sejnowski. The lectures are short. Do the retrieval, not just the videos.</li>
+<li>Oakley, <em>A Mind for Numbers</em>. The same ideas on paper, so you can close it.</li>
+<li><a href="https://chem.libretexts.org/Bookshelves/General_Chemistry/Concept_Development_Studies_in_Chemistry_(Hutchinson)" rel="nofollow">Hutchinson, <em>Concept Development Studies in Chemistry</em></a>, Rice University. Free. The subject is chemistry, but the point is the order, and the order carries over to anything.</li>
 </ol>
-<p>Sibling site for the older fundamentals: <a href="https://learn.curiosta.com/">learn.curiosta.com</a>.</p>
+<p>Our sibling site covers the older fundamentals: <a href="https://learn.curiosta.com/">learn.curiosta.com</a>.</p>
+<h3>Oakley, in practice</h3>
+<p><b>Illusion of competence.</b> Highlighting and rereading feel like study, but they're recognition. Close the book and write what you remember. The blank line is the lesson. Sleep on it, then retrieve again. Spacing it out beats one long sitting.</p>
+<p><b>Sleep.</b> Memory settles while you sleep. The <a href="/spells/#patronus">Patronus test</a> is built on that: write today, retrieve tomorrow.</p>
 </div></section>
-<section class="block alt"><div class="wrap">
-<p class="eyebrow">Oakley, in practice</p>
-<div class="spell"><h3>Two modes</h3><p>Focused mode works a problem you already have a frame for. Diffuse mode links things you did not mean to link. You cannot be in both at once. Twenty-five minutes, then a walk, a bus, a shower. The arrival in the shower is not magic. Focused work has to leave an unfinished problem, or diffuse mode has nothing to chew on.</p></div>
-<div class="spell"><h3>Chunking</h3><p>A chunk is a concept pressed into one slot of working memory, so the slot is free for the next step. Focus, understand, then know the context where it applies. A formula memorised without the context falls apart when the question is asked a different way. That is the exam you thought you had prepared for.</p></div>
-<div class="spell"><h3>Illusion of competence</h3><p>Highlighting and rereading feel like study. They are recognition. Close the book. Write what you remember. The blank line is the lesson. Sleep, then retrieve again. Spacing beats a single long sitting.</p></div>
-<div class="spell"><h3>The rule for a model</h3><p>Use it to accelerate, never to replace. Ask it for a question, not an essay. Then answer with the tool closed. If you cannot explain the thing without it, you borrowed the explanation. Return it.</p></div>
-</div></section>
-<section class="block"><div class="wrap">
-<p class="eyebrow">Build last</p>
+
+<section class="block" id="hutchinson"><div class="wrap narrow">
+<p class="eyebrow">05 · Build last</p>
 <h2>Hutchinson's order</h2>
-<p>His phrase. Students were being handed the model and asked to believe it. He reversed the room. Foundation, then a question the foundation forces, then an observation, then a deduction, then a model that is allowed to be wrong.</p>
-<p>Models are not proved. They are retired when an observation will not fit. If you can only recite the model, you took the conclusion. You did not earn it. That is <a href="/spells/">the fifth spell</a>.</p>
-<p class="note">Checked against the public course and the open Rice text, 7 Oct 2026. This page is a reading of them, not a substitute.</p>
+<ol class="order"><li>Foundation</li><li>Question</li><li>Observations</li><li>Deduction</li><li>Model</li></ol>
+<p>He says the collection is meant to "redirect the focus of learning." Students were being handed the model and asked to believe it, so he turned the order around: a foundation, then a question the foundation forces, then observations, then deductions, and finally a model that's allowed to be wrong.</p>
+<p>Models aren't proved. They're retired when an observation won't fit. If all you can do is recite the model, you took the conclusion without earning it. You can feel this happen in <a href="/spells/#foundation">the fifth spell</a>.</p>
+<p class="checked">Checked against the public Coursera course page and the open Hutchinson text, 11 Oct 2026. This page is our reading of them, not a substitute.</p>
 </div></section>
 </main>
-<footer class="footer"><div class="wrap">mind · a Curiosta brand · <a href="/defense/">defense</a> · <a href="https://learn.curiosta.com/">learn</a> · <a href="https://kinetic.curiosta.com/">kinetic</a></div></footer>
+<footer class="footer"><div class="wrap cols">
+<div><p><b style="color:#fff">mind</b> · a Curiosta brand</p><p>No tracking. Anything you type stays in your browser.</p></div>
+<div><p><a href="/spells/">spells</a> · <a href="/learn/">learn</a> · <a href="/defense/">defense</a> · <a href="/ideas/">ideas</a> · <a href="/calendar/">calendar</a> · <a href="/about/">about</a></p>
+<p>Family: <a href="https://learn.curiosta.com/">learn</a> · <a href="https://kinetic.curiosta.com/">kinetic</a> · <a href="https://buildwith.curiosta.com/">buildwith</a> · <a href="https://founder.curiosta.com/">founder</a></p></div>
+</div></footer>
 </body>
 </html>
