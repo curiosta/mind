@@ -63,3 +63,5 @@ After the refresh: a short summary of what was added, what moved to the archive,
 - All examples are invented and labelled with `.example-tag`. Never attribute an invented quote or number to a real person or body.
 - Explanations must read fully without JavaScript; interactive controls use `.js-only`, no-JS substitutes use `.no-js`.
 - The only stored data is the Patronus memory, in `localStorage` key `mind.patronus.v1`, saved only on an explicit button press.
+- Comments: a giscus "Discuss this page" block (between `<!-- giscus:start -->` and `<!-- giscus:end -->`) goes on spells, learn, defense, ideas, calendar and about. Never on the home page. The generator emits it, so don't hand-edit it in the built HTML.
+- Contrast: small accent text on light surfaces uses `--sea-500` or `--mind-coral-ink`, never `--teal` or `--coral`. Re-run the contrast and axe checks before every freeze.
