@@ -379,7 +379,13 @@
   }
 
   var LABS = { recall: recall, patronus: patronus, occlumency: occlumency, legilimency: legilimency, priori: priori, foundation: foundation, chunk: chunk, prompt: promptLab, pomo: pomo, defense: defense, ideas: ideas };
+  function navIntoView() {
+    var nav = document.querySelector(".sectionnav"), cur = nav && nav.querySelector('[aria-current="page"]');
+    if (!nav || !cur || nav.scrollWidth <= nav.clientWidth) return;
+    nav.scrollLeft = Math.max(0, cur.offsetLeft - (nav.clientWidth - cur.offsetWidth) / 2);
+  }
   function init() {
+    navIntoView();
     $$(document, "[data-lab]").forEach(function (lab) {
       var fn = LABS[lab.getAttribute("data-lab")];
       if (fn) { try { fn(lab); } catch (e) { if (window.console) console.error("mind lab failed:", lab.getAttribute("data-lab"), e); } }
