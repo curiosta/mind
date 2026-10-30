@@ -1,5 +1,6 @@
 /* mind.curiosta.com — page experiments. Vanilla JS, no tracking, nothing sent anywhere.
-   Only the Patronus memory is stored, in localStorage, and only when the visitor presses "Keep it here". */
+   Only two things are stored, both in localStorage: the anchor-memory note (only when the visitor presses "Keep it here")
+   and the last score on a module challenge. */
 (function () {
   "use strict";
   var $ = function (root, sel) { return root.querySelector(sel); };
@@ -69,8 +70,9 @@
     });
   }
 
-  /* ---------- Patronus ---------- */
-  var KEY = "mind.patronus.v1";
+  /* ---------- Anchor memory (C2) and the memory-or-caption drill ---------- */
+  var KEY = "mind.anchor.v1", OLD_KEY = "mind.patronus.v1";
+  function migrate() { var old = store.get(OLD_KEY); if (old && old.text && !store.get(KEY)) { if (store.set(KEY, old)) store.del(OLD_KEY); } else if (old && store.get(KEY)) store.del(OLD_KEY); }
   var VAGUE = ["nice","good","great","fine","okay","ok","amazing","awesome","fun","productive","busy","normal","usual","lovely","interesting","boring","bad","wonderful","relaxing","chill","stuff","things","usual","whatever","beautiful","memorable"];
   var SIGNALS = [
     { label: "a sound", re: /\b(heard|hear|hearing|sound|sounds|noise|loud|quiet|silence|music|song|honk\w*|horn|ring\w*|buzz\w*|bark\w*|laugh\w*|shout\w*|whisper\w*|rain|thunder|cried|crying|sang|singing|playing|tick\w*|clatter\w*|hiss\w*)\b/i },
@@ -80,8 +82,16 @@
     { label: "a specific place", re: /\b(kitchen|room|bedroom|balcony|terrace|roof|bus|auto|metro|train|station|platform|office|desk|road|street|lane|market|shop|store|cafe|café|canteen|park|school|college|class|library|temple|church|mosque|hospital|car|bike|scooter|stairs|gate|window|door|queue|counter|bed|sofa|table|garden)\b/i },
     { label: "a time or a number", re: /\d|\b(morning|afternoon|evening|night|midnight|noon|o'clock|am|pm)\b/i }
   ];
-  function patronus(lab) {
-    var ta = $(lab, "#pat-text"), result = $(lab, '[data-step="result"]'), write = $(lab, '[data-step="write"]');
+  var PARTS = [
+    { label: "the idea, in your own words", test: function (t) { return (t.match(/[A-Za-z\u0900-\u097F']+/g) || []).length >= 8; } },
+    { label: "an example, or a number", test: function (t) { return /\d|\b(for example|for instance|example|e\.g\.|such as|like when|like the time)\b/i.test(t); } },
+    { label: "a link to your own life (I, my, we)", test: function (t) { return /\b(i|i'm|i've|my|me|we|our|us)\b/i.test(t); } }
+  ];
+  function vagueWords(text) { var words = text.toLowerCase().match(/[a-z']+/g) || [], vague = []; words.forEach(function (w) { if (VAGUE.indexOf(w) > -1 && vague.indexOf(w) < 0) vague.push(w); }); return vague; }
+  function vagueHtml(vague) { return vague.length ? vague.map(function (v) { return '<mark class="flag">' + esc(v) + "</mark>"; }).join(" ") + "<br><span class=\"note\">These say how it felt, not what it was.</span>" : "None spotted."; }
+  function anchor(lab) {
+    migrate();
+    var ta = $(lab, "#anchor-text"), result = $(lab, '[data-step="result"]'), write = $(lab, '[data-step="write"]');
     var retrieve = $(lab, '[data-step="retrieve"]');
     var saved = store.get(KEY);
     if (saved && saved.text) {
@@ -91,38 +101,135 @@
     $(lab, '[data-action="compare"]').addEventListener("click", function () {
       var s = store.get(KEY); if (!s) return;
       $(lab, '[data-field="then"]').textContent = s.text;
-      $(lab, '[data-field="now"]').textContent = $(lab, "#pat-retrieve").value.trim() || "(blank)";
+      $(lab, '[data-field="now"]').textContent = $(lab, "#anchor-retrieve").value.trim() || "(blank)";
       var out = $(lab, '[data-step="compare-out"]'); show(out); focusEl(out);
     });
-    $(lab, '[data-action="forget"]').addEventListener("click", function () {
-      store.del(KEY); hide(retrieve); focusEl(write);
-    });
+    $(lab, '[data-action="forget"]').addEventListener("click", function () { store.del(KEY); store.del(OLD_KEY); hide(retrieve); focusEl(write); });
     $(lab, '[data-action="check"]').addEventListener("click", function () {
       var text = ta.value.trim();
       if (text.length < 3) { ta.focus(); ta.setAttribute("aria-invalid", "true"); ta.placeholder = "Write something first, even one line."; return; }
       ta.removeAttribute("aria-invalid");
-      var found = SIGNALS.filter(function (s) { return s.re.test(text); });
-      var words = text.toLowerCase().match(/[a-z']+/g) || [];
-      var vague = []; words.forEach(function (w) { if (VAGUE.indexOf(w) > -1 && vague.indexOf(w) < 0) vague.push(w); });
-      $(lab, '[data-field="found"]').innerHTML = SIGNALS.map(function (s) { var ok = found.indexOf(s) > -1; return "<li>" + (ok ? "✓ " : "· <span style=\"color:var(--muted)\">no ") + esc(s.label) + (ok ? "" : "</span>") + "</li>"; }).join("");
-      $(lab, '[data-field="vague"]').innerHTML = vague.length ? vague.map(function (v) { return '<mark class="flag">' + esc(v) + "</mark>"; }).join(" ") + "<br><span class=\"note\">These say how it felt, not what happened.</span>" : "None spotted.";
+      var found = PARTS.filter(function (s) { return s.test(text); }), vague = vagueWords(text);
+      $(lab, '[data-field="found"]').innerHTML = PARTS.map(function (s) { var ok = found.indexOf(s) > -1; return "<li>" + (ok ? "✓ " : "· <span style=\"color:var(--muted)\">no ") + esc(s.label) + (ok ? "" : "</span>") + "</li>"; }).join("");
+      $(lab, '[data-field="vague"]').innerHTML = vagueHtml(vague);
       var n = found.length, verdict;
-      if (n >= 4 && vague.length === 0) verdict = "<strong>That reads like a memory.</strong> A stranger could stand in it. Now the real test: keep it here and rewrite it from memory tomorrow.";
-      else if (n >= 3) verdict = "<strong>Part memory, part caption.</strong> Some of it a stranger could picture. Add the missing pieces from the list, the ones you can actually remember, not ones you'd guess.";
-      else verdict = "<strong>That's closer to a caption than a memory.</strong> It tells someone how it felt, but they couldn't picture it. Try again with one sound, one sentence someone said, and what your hands were doing. If you can't remember them, that's the finding.";
+      if (n === 3 && vague.length === 0) verdict = "<strong>All three parts are there.</strong> Now the real test: keep it here and write it again from memory tomorrow, before you look.";
+      else if (n >= 2) verdict = "<strong>Most of an anchor.</strong> Add the missing part from the list, then keep it for tomorrow.";
+      else verdict = "<strong>Closer to a headline than an anchor.</strong> Say the idea in a full sentence of your own, give one example, and say where it touches your life.";
       $(lab, '[data-field="verdict"]').innerHTML = verdict;
       $(lab, '[data-field="saved-msg"]').textContent = "";
       show(result); focusEl(result);
     });
     $(lab, '[data-action="save"]').addEventListener("click", function () {
       var ok = store.set(KEY, { date: today(), text: ta.value.trim() });
-      $(lab, '[data-field="saved-msg"]').textContent = ok ? "Kept in this browser only. Nothing was sent anywhere. Come back to this page tomorrow and it will ask you to rewrite it before showing you the original." : "Your browser didn't allow local storage. Copy it somewhere instead, and rewrite it tomorrow before you look.";
+      $(lab, '[data-field="saved-msg"]').textContent = ok ? "Kept in this browser only. Nothing was sent anywhere. Come back to this page tomorrow and it will ask you to write it again before showing you the original." : "Your browser didn't allow local storage. Copy it somewhere instead, and write it again tomorrow before you look.";
     });
     $(lab, '[data-action="retry"]').addEventListener("click", function () { hide(result); ta.focus(); });
   }
+  function caption(lab) {
+    var ta = $(lab, "#caption-text"), result = $(lab, '[data-step="caption-result"]');
+    $(lab, '[data-action="check"]').addEventListener("click", function () {
+      var text = ta.value.trim();
+      if (text.length < 3) { ta.focus(); ta.setAttribute("aria-invalid", "true"); ta.placeholder = "Write something first, even one line."; return; }
+      ta.removeAttribute("aria-invalid");
+      var found = SIGNALS.filter(function (s) { return s.re.test(text); }), vague = vagueWords(text);
+      $(lab, '[data-field="found"]').innerHTML = SIGNALS.map(function (s) { var ok = found.indexOf(s) > -1; return "<li>" + (ok ? "✓ " : "· <span style=\"color:var(--muted)\">no ") + esc(s.label) + (ok ? "" : "</span>") + "</li>"; }).join("");
+      $(lab, '[data-field="vague"]').innerHTML = vagueHtml(vague);
+      var n = found.length, verdict;
+      if (n >= 4 && vague.length === 0) verdict = "<strong>That reads like a memory.</strong> A stranger could stand in it. Detail is a clue, not proof that every part is accurate.";
+      else if (n >= 3) verdict = "<strong>Part memory, part caption.</strong> Add the missing pieces you can actually remember, not ones you'd guess.";
+      else verdict = "<strong>That's closer to a caption than a memory.</strong> It tells someone how it felt, but they couldn't picture it. If you can't remember a sound or a sentence, that's the finding.";
+      $(lab, '[data-field="verdict"]').innerHTML = verdict;
+      show(result); focusEl(result);
+    });
+  }
 
-  /* ---------- Occlumency ---------- */
-  function occlumency(lab) {
+
+  /* ---------- Module challenge (15 questions, scored locally) ---------- */
+  function challenge(lab) {
+    var name = lab.getAttribute("data-quiz"), key = lab.getAttribute("data-key");
+    var dataEl = document.getElementById("quiz-" + name + "-data"); if (!dataEl) return;
+    var qs = JSON.parse(dataEl.textContent), items = $$(lab, "li.q"), answers = $$(lab, "details.q-ans");
+    var scoreBtn = $(lab, '[data-action="score"]'), resetBtn = $(lab, '[data-action="reset"]'), out = $(lab, '[data-step="score"]');
+    var lastEl = $(lab, '[data-field="last"]'), un = $(lab, '[data-field="unanswered"]');
+    answers.forEach(hide);
+    function showLast() { var l = store.get(key); if (l && typeof l.score === "number") { lastEl.textContent = "Last time in this browser: " + l.score + " of " + l.of + ", on " + niceDate(l.date) + "."; show(lastEl); } }
+    showLast();
+    function chosen(i) { var c = lab.querySelector('input[name="' + name + '-q' + (i + 1) + '"]:checked'); return c ? +c.value : null; }
+    scoreBtn.addEventListener("click", function () {
+      var left = 0; qs.forEach(function (q, i) { if (chosen(i) === null) left++; });
+      if (left && !scoreBtn.getAttribute("data-warned")) { scoreBtn.setAttribute("data-warned", "1"); un.textContent = left + " question" + (left === 1 ? " is" : "s are") + " still blank. Press Score me again to score anyway; blanks count as missed."; return; }
+      un.textContent = "";
+      var score = 0, by = {}, order = [];
+      qs.forEach(function (q, i) {
+        var c = chosen(i), ok = c === q.a, li = items[i];
+        if (!by[q.ch]) { by[q.ch] = [0, 0]; order.push(q.ch); }
+        by[q.ch][1]++; if (ok) { by[q.ch][0]++; score++; }
+        li.classList.add(ok ? "is-right" : "is-wrong");
+        $$(li, "input").forEach(function (x) { x.disabled = true; });
+        var d = answers[i]; show(d); if (!ok) d.open = true;
+      });
+      var band = score >= 12 ? "You'd catch most of these. Keep the habit: the call back on your own number is what protects you." : score >= 9 ? "Solid, with gaps. The chapters below cover the ones you missed." : "Worth reading the chapters below, then trying again. Most people miss some of these the first time.";
+      $(lab, '[data-field="score"]').textContent = score + " of " + qs.length;
+      $(lab, '[data-field="band"]').textContent = band;
+      $(lab, '[data-field="by-chapter"]').innerHTML = order.map(function (ch) {
+        var h = document.getElementById(ch), title = h ? (h.querySelector(".eyebrow") || h).textContent.replace(/^Chapter · /, "") : ch;
+        return '<li><a href="#' + esc(ch) + '">' + esc(title) + "</a>: " + by[ch][0] + " of " + by[ch][1] + "</li>";
+      }).join("");
+      store.set(key, { score: score, of: qs.length, date: today() });
+      hide(scoreBtn); show(resetBtn); show(out); focusEl(out);
+    });
+    resetBtn.addEventListener("click", function () {
+      items.forEach(function (li) { li.classList.remove("is-right", "is-wrong"); $$(li, "input").forEach(function (x) { x.disabled = false; x.checked = false; }); });
+      answers.forEach(function (d) { d.open = false; hide(d); });
+      scoreBtn.removeAttribute("data-warned"); hide(out); hide(resetBtn); show(scoreBtn); showLast();
+      focusEl(items[0]);
+    });
+  }
+
+  /* ---------- Two answers (fast pass, then slow pass) ---------- */
+  function twoanswers(lab) {
+    var list = $(lab, ".ta-list"), run = $(lab, ".ta-run"), out = $(lab, '[data-step="ta-result"]');
+    var msgs = $$(list, "li").map(function (li) { return { text: li.querySelector(".ta-msg").textContent, truth: li.getAttribute("data-truth") }; });
+    var startBtn = $(lab, '[data-action="start"]'), noTimer = $(lab, '[data-field="no-timer"]');
+    var passEl = $(lab, '[data-field="ta-pass"]'), msgEl = $(lab, '[data-field="ta-msg"]'), barWrap = $(lab, '[data-field="ta-timerbar"]'), bar = $(lab, '[data-field="ta-bar"]');
+    var btns = $$(lab, "[data-answer]"), pass = 0, i = 0, first = [], second = [], timer = null, limit = 5;
+    hide(list);
+    function clear() { if (timer) { clearInterval(timer); timer = null; } }
+    function next() {
+      clear();
+      if (i >= msgs.length) { if (pass === 1) { pass = 2; i = 0; } else return finish(); }
+      var timed = pass === 1 && !noTimer.checked;
+      passEl.textContent = (pass === 1 ? "Fast pass" + (timed ? ", 5 seconds each" : ", timer off") : "Slow pass, take your time") + " · message " + (i + 1) + " of " + msgs.length;
+      msgEl.textContent = msgs[i].text;
+      btns.forEach(function (b) { b.disabled = false; b.setAttribute("aria-pressed", "false"); });
+      if (timed) {
+        show(barWrap); var leftS = limit; bar.style.width = "100%";
+        timer = setInterval(function () { leftS--; bar.style.width = Math.max(0, leftS / limit * 100) + "%"; if (leftS <= 0) answer(null); }, 1000);
+      } else hide(barWrap);
+    }
+    function answer(a) { clear(); (pass === 1 ? first : second)[i] = a; i++; next(); }
+    btns.forEach(function (b) { b.addEventListener("click", function () { answer(b.getAttribute("data-answer")); }); });
+    function finish() {
+      hide(run);
+      var changed = 0, r1 = 0, r2 = 0;
+      var rows = msgs.map(function (m, k) {
+        if (first[k] !== second[k]) changed++;
+        if (first[k] === m.truth) r1++; if (second[k] === m.truth) r2++;
+        var lab1 = first[k] ? (first[k] === "scam" ? "Scam" : "Fine") : "no answer", lab2 = second[k] === "scam" ? "Scam" : "Fine";
+        return "<li><b>" + esc(m.text.slice(0, 70)) + (m.text.length > 70 ? "…" : "") + "</b><br>Fast: " + lab1 + " · Slow: " + lab2 + " · Likely: " + (m.truth === "scam" ? "Scam" : "Fine") + "</li>";
+      });
+      $(lab, '[data-field="ta-changed"]').textContent = changed + " of " + msgs.length + " changed";
+      $(lab, '[data-field="ta-note"]').textContent = "Fast pass: " + r1 + " of " + msgs.length + " matched. Slow pass: " + r2 + " of " + msgs.length + ". " + (r2 > r1 ? "The second look helped. That's the pause, working." : changed ? "Your answers moved even though the score didn't. The second look still changed your mind." : "Nothing changed. Real calls are harder than six lines on a screen, so the pause still matters.") + " Six invented messages are a model, not a measurement.";
+      $(lab, '[data-field="ta-table"]').innerHTML = rows.join("");
+      show(out); focusEl(out);
+    }
+    startBtn.addEventListener("click", function () { pass = 1; i = 0; first = []; second = []; hide(out); hide(startBtn); show(run); next(); focusEl(run); });
+    $(lab, '[data-action="again"]').addEventListener("click", function () { hide(out); show(startBtn); focusEl(startBtn); });
+  }
+
+  /* ---------- Name the feeling (C3) ---------- */
+  function feeling(lab) {
     var msg = $(lab, '[data-step="message"]'), start = $(lab, '[data-step="start"]'), feel = $(lab, '[data-step="feel"]');
     var explain = $(lab, '[data-step="explain"]'), timerEl = $(lab, '[data-field="timer"]'), bar = $(lab, '[data-field="bar"]');
     var clock = $(lab, '[data-step="clock"]');
@@ -141,7 +248,7 @@
     });
     $(lab, '[data-action="stop-timer"]').addEventListener("click", function () { stop(); hide(clock); });
     var NOTES = {
-      send: ["Send the money", "That's the impulse the message was built for. If you hesitated even for a second, notice what made you hesitate. That was the start of Occlumency."],
+      send: ["Send the money", "That's the impulse the message was built for. If you hesitated even for a second, notice what made you hesitate. That was the start of naming the feeling."],
       forward: ["Forward it to the family group", "It feels like doing something. But forwarding spreads the panic, and it still isn't a check. Everyone in the group now has the same unverified message."],
       ask: ["Reply: \"Which hospital?\"", "Better than paying. But you're still talking inside the sender's channel, and whoever sent it can answer anything. The check has to happen outside the message."],
       call: ["Call Mama on the number you already have", "That's the move. One call outside the message settles it either way: you reach her, or you learn she's at home making tea."],
@@ -164,20 +271,20 @@
       nothing: "You named nothing much. Fine, but you still chose in a few seconds. A feeling you don't notice still gets a vote."
     };
     feels.forEach(function (b) { b.addEventListener("click", function () {
-      press(feels, b); $(lab, '[data-field="feel-note"]').textContent = FEEL[b.getAttribute("data-feel")] + " Naming it is the spell: once it has a name, it stops being the one deciding.";
+      press(feels, b); $(lab, '[data-field="feel-note"]').textContent = FEEL[b.getAttribute("data-feel")] + " Naming it buys a moment: once it has a name, it stops being the only thing deciding. Then check outside the message.";
       // highlight hooks in the message
       $$(lab, "[data-hook]").forEach(function (h) { h.classList.add("flag"); h.outerHTML = '<mark class="flag">' + h.innerHTML + "</mark>"; });
       show(explain); focusEl(explain);
     }); });
   }
 
-  /* ---------- Legilimency ---------- */
-  function legilimency(lab) {
+  /* ---------- Notice the pattern (C4) ---------- */
+  function pattern(lab) {
     var stance = null, before = 0, after = 0, asked = [];
     var stanceBtns = $$(lab, "[data-stance]"), qBtns = $$(lab, "[data-q]");
     var b1 = $$(lab, '[data-scale="before"] .chip'), b2 = $$(lab, '[data-scale="after"] .chip');
     var askStep = $(lab, '[data-step="ask"]'), omitted = $(lab, '[data-step="omitted"]');
-    var article = $(lab, '[data-step="article"]'), rate1 = $(lab, '[data-step="rate1"]'), ahaBox = $(lab, '[data-step="leg-aha"]');
+    var article = $(lab, '[data-step="article"]'), rate1 = $(lab, '[data-step="rate1"]'), ahaBox = $(lab, '[data-step="pattern-aha"]');
     [stanceBtns, qBtns, b1, b2].forEach(setPressable);
     hide(article); hide(rate1); hide(omitted);
     stanceBtns.forEach(function (b) { b.addEventListener("click", function () { stance = b.getAttribute("data-stance"); press(stanceBtns, b); show(article); show(rate1); }); });
@@ -200,14 +307,14 @@
       if (stance === "yes") m += "You also said you favour bans, so this was a story that agreed with you, which is where gaps are hardest to see.";
       else if (stance === "no") m += "You said you're against bans. You may have doubted this piece easily. The real test is a piece on your side.";
       else m += "You weren't sure about bans, which makes it easier to read cleanly. Try this on something you feel strongly about.";
-      $(lab, '[data-field="leg-msg"]').textContent = m; show(ahaBox);
+      $(lab, '[data-field="pattern-msg"]').textContent = m; show(ahaBox);
     }); });
   }
 
-  /* ---------- Priori Incantatem ---------- */
-  function priori(lab) {
+  /* ---------- Trace the source (C5) ---------- */
+  function source(lab) {
     var hops = [4, 3, 2, 1].map(function (n) { return $(lab, '[data-hop="' + n + '"]'); });
-    var backBtn = $(lab, '[data-action="back"]'), count = $(lab, '[data-field="hopcount"]'), aha = $(lab, '[data-step="priori-aha"]');
+    var backBtn = $(lab, '[data-action="back"]'), count = $(lab, '[data-field="hopcount"]'), aha = $(lab, '[data-step="source-aha"]');
     var guesses = $$(lab, "[data-guess]"), guess = null, i = 0;
     hops.forEach(hide); hide(aha); setPressable(guesses);
     count.textContent = "You are at hop 5 of 5: the forward.";
@@ -224,9 +331,9 @@
     });
   }
 
-  /* ---------- Foundation ---------- */
-  function foundation(lab) {
-    var btns = $$(lab, "[data-model]"), brk = $(lab, '[data-step="break"]'), fin = $(lab, '[data-step="found-aha"]');
+  /* ---------- Look first (C6) ---------- */
+  function lookfirst(lab) {
+    var btns = $$(lab, "[data-model]"), brk = $(lab, '[data-step="break"]'), fin = $(lab, '[data-step="look-aha"]');
     var steps = $$(lab, ".order li");
     function at(n) { steps.forEach(function (s) { s.classList.toggle("now", +s.getAttribute("data-o") === n); }); }
     hide(fin); at(5); setPressable(btns);
@@ -358,7 +465,7 @@
 
   /* ---------- Calendar filters ---------- */
   function calendar() {
-    var state = { spell: "all", cost: "all", format: "all", cadence: "all", city: "all" };
+    var state = { concept: "all", cost: "all", format: "all", cadence: "all", city: "all" };
     var buttons = $$(document, ".filter-btn"), entries = $$(document, "#cal-upcoming .cal-entry"), empty = document.getElementById("cal-empty");
     if (!buttons.length) return;
     function apply() {
@@ -378,7 +485,7 @@
     }); });
   }
 
-  var LABS = { recall: recall, patronus: patronus, occlumency: occlumency, legilimency: legilimency, priori: priori, foundation: foundation, chunk: chunk, prompt: promptLab, pomo: pomo, defense: defense, ideas: ideas };
+  var LABS = { recall: recall, anchor: anchor, caption: caption, feeling: feeling, pattern: pattern, source: source, lookfirst: lookfirst, challenge: challenge, twoanswers: twoanswers, chunk: chunk, prompt: promptLab, pomo: pomo, defense: defense, ideas: ideas };
   function navIntoView() {
     var nav = document.querySelector(".sectionnav"), cur = nav && nav.querySelector('[aria-current="page"]');
     if (!nav || !cur || nav.scrollWidth <= nav.clientWidth) return;
